@@ -89,12 +89,42 @@ class cropped_image():
 
         return np.flip(ids_files, 0)  # flip to descending
 
+<<<<<<< HEAD
+=======
+    def filenameToPng(self, filename):
+        # williams code for accessing mongodb
+        # unused but retained for future flexibility
+        
+        mm = mapdata.find_one({"filename": filename})["png"]
+        img = BytesIO(base64.b64decode(mm))
+        resultImg = Image.open(img)
+        #resultImg.save("TestPILImage.png")
+        print(type(resultImg))
+        return resultImg
+
+>>>>>>> 45fac2f2b41bbc8e2df43a382d86515d42709c81
     def read_images(self):
         # read images into a numpy array of images(numpy arrays(178x178x3))
         # or read files from database if images are not local
         # OUTPUT
         ## numpy array of ordered images (# of files x 178 x 178 x 3)
 
+<<<<<<< HEAD
+=======
+        '''
+        # reading from database
+        # unused but retained for future flexibility
+        files = self.sort_files()[:,1]
+        imgs = []
+        
+        for file in files:
+            name = file[:-4]
+            img = self.filenameToPng(name)  # reads file 
+            imgs.append(img)
+            pass
+        '''
+        
+>>>>>>> 45fac2f2b41bbc8e2df43a382d86515d42709c81
         # read images from local
         imgs = np.array([plt.imread(img) for img in self.sort_files()[:, 1]])
         
@@ -106,7 +136,11 @@ class cropped_image():
         ## full uncropped image(numpy array) to be shown (n*178 x n*178 x 3) n = # of files
 
         imgs = self.read_images()
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> 45fac2f2b41bbc8e2df43a382d86515d42709c81
         img_shape = imgs.shape
 
         #finds number of files across
@@ -122,8 +156,13 @@ class cropped_image():
         if img_shape[0] == 2:
 
             # dealing with weird grid convention to get row index
+<<<<<<< HEAD
             file0_row = cropped.row_mapper(np.array([imgs[0][12:-4]]))[0][0]
             file1_row = cropped.row_mapper(np.array([imgs[1][12:-4]]))[0][0]
+=======
+            file0_row = cropped.row_mapper(np.array([f[0][12:-4]]))[0][0]
+            file1_row = cropped.row_mapper(np.array([f[1][12:-4]]))[0][0]
+>>>>>>> 45fac2f2b41bbc8e2df43a382d86515d42709c81
 
             if file0_row == file1_row:
                 return np.hstack(imgs)
